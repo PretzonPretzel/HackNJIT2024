@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import Testing from './components/Testing.vue';
+import Testing from './components/Navigation.vue';
 
 
 </script>

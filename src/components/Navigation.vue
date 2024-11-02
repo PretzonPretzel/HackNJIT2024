@@ -4,10 +4,10 @@
 
 <template>
     <div id="main-nav">
-        <a>Home</a>
-        <a>About</a>
-        <a>Contact</a>
-        <a>Blog</a>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="">Contact</RouterLink>
+        <RouterLink to="">Blog</RouterLink>
     </div>
 </template>
 
