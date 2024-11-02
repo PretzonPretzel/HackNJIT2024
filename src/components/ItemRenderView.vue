@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import { onMounted, ref, type Ref } from 'vue';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Background from 'three/src/renderers/common/Background.js';
 
@@ -19,12 +20,13 @@ scene.add(camera)
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 const cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
+// scene.add( cube );
 
 camera.position.z = 5;
 
 onMounted(() => {
   const renderer = new THREE.WebGLRenderer({
+    alpha: true,
     canvas: canvasRenderer.value,
     antialias: true
   });
@@ -41,12 +43,24 @@ onMounted(() => {
   }
   renderer.setAnimationLoop( animate );
 })
+
+const loader = new GLTFLoader();
+
+loader.load( '../assets/models/cube.glb', function ( gltf ) {
+
+	scene.add( gltf.scene );
+
+}, undefined, function ( error ) {
+
+	console.error( error );
+
+} );
 </script>
 
 <style scoped>
 .canvas-renderer {
   width: 500px;
   height: 500px;
-  border: 2px solid black;
+  border: 12px solid black;
 }
 </style> 
