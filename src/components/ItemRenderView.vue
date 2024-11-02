@@ -21,6 +21,7 @@ scene.add(camera)
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 const cube = new THREE.Mesh( geometry, material );
+cube.position.set(0, 0, 0)
 // scene.add( cube );
 
 camera.position.z = 5;
@@ -52,11 +53,10 @@ function loadObj() {
 function loadGltf() {
   const loader = new GLTFLoader();
 
-  loader.load( '/public/assets/untitled.gltf', function ( gltf ) {
+  loader.load( '/public/assets/cub.gltf', function ( gltf ) {
     console.log(gltf)
-    gltf.scene.children[0].scale.set(100, 100, 100)
+    // gltf.scene.children[0].scale.set(1000, 1000, 1000)
     scene.add( gltf.scene );
-
   }, undefined, function ( error ) {
 
     console.error( error );
@@ -71,24 +71,37 @@ scene.add(gridHelper);
 const axesHelper = new THREE.AxesHelper(4);
 scene.add(axesHelper);
 
+// ambient light
+const ambientLight = new THREE.AmbientLight( 0x404040, 0.001 );
+const hemisphericLight = new THREE.HemisphereLight({
+  skyColor: 0xffffbb,
+  groundColor: 0x080820,
+  intensity: 0.25,
+  position: {
+    x: 0,
+    y: 430,
+    z: -2500
+  }
+});
+
+scene.add(ambientLight)
+scene.add(hemisphericLight)
+
 onMounted(() => {
   const renderer = new THREE.WebGLRenderer({
-    // alpha: true,
+    alpha: true, 
     canvas: canvasRenderer.value,
     antialias: true
   });
   renderer.setSize( 500, 500 );
   const controls = new OrbitControls( camera, renderer.domElement );
   
-  // renderer.render( scene, camera );
-  const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
-  scene.add(light)
-
   loadGltf()
+  renderer.render( scene, camera)
   
   function animate() {
     requestAnimationFrame( animate );
-
+    camera.updateMatrixWorld()
     renderer.render( scene, camera );
 
     controls.update();
