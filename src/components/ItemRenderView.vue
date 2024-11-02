@@ -10,7 +10,7 @@ import * as THREE from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Background from 'three/src/renderers/common/Background.js';
-import { MTLLoader, OBJLoader } from 'three/examples/jsm/Addons.js';
+import { GLTFLoader, MTLLoader, OBJLoader } from 'three/examples/jsm/Addons.js';
 
 const canvasRenderer: Ref<HTMLCanvasElement | undefined> = ref()
 
@@ -21,26 +21,55 @@ scene.add(camera)
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 const cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
+// scene.add( cube );
 
 camera.position.z = 5;
 
-// var mtlLoader = new MTLLoader();
-// var plant_cube = undefined;
-// mtlLoader.load("../assets/models/cubeSatck.mtl", function(materials)
-// {
-//     materials.preload();
-//     var objLoader = new OBJLoader();
-//     objLoader.setMaterials(materials);
-//     objLoader.load("../assets/models/cubeStack.obj", function(object)
-//     {    
-//         plant_cube = object;
-//         scene.add( plant_cube );
-//     });
-// });
+function loadObj() {
+  const mtlLoader = new MTLLoader()
+  mtlLoader.load("../assets/models/cubeStack.mtl", (materials) => {
+    materials.preload();
+    var objLoader = new OBJLoader();
+    objLoader.setMaterials(materials);
+    objLoader.load("../assets/models/cubeStack.obj", (obj) => {  
+      var box = new THREE.Box3().setFromObject( obj );
+      var center = new THREE.Vector3();
+      box.getCenter( center );
+      obj.position.sub( center );
+      scene.add(obj)
+      console.log(obj)
+    },
+    (progress) => {
+      console.log("Progress:", progress)
+    },
+    (error) => {
+      console.error("An error:", error)
+    }
+  )
+  })
+}
 
+function loadGltf() {
+  const loader = new GLTFLoader();
 
+  loader.load( '/public/assets/untitled.gltf', function ( gltf ) {
+    console.log(gltf)
+    gltf.scene.children[0].scale.set(100, 100, 100)
+    scene.add( gltf.scene );
 
+  }, undefined, function ( error ) {
+
+    console.error( error );
+
+  });
+}
+
+const gridHelper = new THREE.GridHelper(12, 12);
+scene.add(gridHelper);
+
+// Creates an axes helper with an axis length of 4.
+const axesHelper = new THREE.AxesHelper(4);
+scene.add(axesHelper);
 
 onMounted(() => {
   const renderer = new THREE.WebGLRenderer({
@@ -54,22 +83,8 @@ onMounted(() => {
   // renderer.render( scene, camera );
   const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
   scene.add(light)
-  const loader = new OBJLoader();
-  loader.load(
-    '../assets/models/cubeStack.obj',
-    (object) => {
-      object.position.set(0,0,0)
-      scene.add(object)
-      console.log(object)
-      renderer.render( scene, camera )
-    },
-    (progress) => {
 
-    },
-    (error) => {
-      console.error("An error occured, oh nyo!", error)
-    }
-  )
+  loadGltf()
   
   function animate() {
     requestAnimationFrame( animate );
