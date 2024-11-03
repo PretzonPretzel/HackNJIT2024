@@ -13,11 +13,19 @@ import ItemPreview from '@/components/ItemPreview.vue';
 import { storeItems } from '@/data/storeItems';
 import type { StoreItem } from '@/types/types';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const allStoreItems = ref(storeItems)
-
+const router = useRouter();
 function handlePreviewClick(id: string) {
-  // TODO route to item/id
+  console.log("hey")
+  
+  router.push({
+    path: `/item/${id}`
+  })
+  // if (router.hasRoute("item/1")) {
+  //   console.log("yes")
+  // }
 }
 </script>
 
