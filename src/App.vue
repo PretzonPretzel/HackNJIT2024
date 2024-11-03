@@ -15,6 +15,14 @@ import Navigation from './components/Navigation.vue';
 
 
 
-<style scoped>
+<style>
+
+@font-face {
+
+  font-family: 'FabulousSteampunk'; /* Choose a name for your font */
+
+  src: url('../public/fonts/FabulousSteampunk-1rYZ.ttf') format('truetype')
+
+}
 
 </style>
