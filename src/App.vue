@@ -1,7 +1,5 @@
 <template>
   <Testing />
-  <!-- <div class="text-blue-500">Hello World</div> -->
-  <ItemRenderView />
   <RouterView />
 </template>
 
