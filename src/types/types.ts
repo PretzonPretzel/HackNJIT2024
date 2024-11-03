@@ -6,7 +6,7 @@ export type StoreItem = {
 
 export type ModelData = {
   displayName: string
-  customizationOptions: PartCustomizationOption[]
+  customizationOptions?: PartCustomizationOption[]
 }
 
 export type PartCustomizationOption = {

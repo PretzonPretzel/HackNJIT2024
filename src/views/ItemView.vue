@@ -1,6 +1,6 @@
 <template>
   <div class="item-view-container">
-    <pre>{{currentItem}}</pre>
+    <!-- <pre>{{currentItem}}</pre> -->
     <div v-if="currentItem" class="item-view">
       <ItemRenderView 
         :file-name="currentItem?.fileName"
@@ -42,10 +42,11 @@ function handleSetOptions(options: PartCustomizationOption[]) {
 
 <style scoped>
 .item-view-container {
-  height: calc(100vh - 48px);
+  /* height: calc(100vh - 48px); */
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 }
 
 .item-view {
@@ -54,5 +55,7 @@ function handleSetOptions(options: PartCustomizationOption[]) {
   justify-content: center;
   align-items: start;
   gap: 1rem;
+  width: 100%;
+  padding: 2rem 2rem;
 }
 </style>

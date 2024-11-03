@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="display-name">{{ currentItem.modelData.displayName }}</h1>
     <canvas ref="canvasRenderer" class="canvas-renderer"></canvas>
   </div>
 </template>
@@ -181,6 +182,7 @@ function updateGroups(options: PartCustomizationOption[]) {
       if (mesh !== undefined) {
         mesh.visible = component.visible
       }
+
       
     }
   }
@@ -192,5 +194,13 @@ function updateGroups(options: PartCustomizationOption[]) {
 .canvas-renderer {
   border: 2px solid black;
   border-radius: 20px;
+}
+
+.display-name {
+  font-weight: 700;
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 </style> 

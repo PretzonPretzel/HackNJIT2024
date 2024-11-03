@@ -5,38 +5,21 @@ export const storeItems: StoreItem[] = [
     id: "1",
     fileName: "steampunkGlasses",
     modelData: {
-      displayName: "Goggles",
-      customizationOptions: [
-        {
-          partName: "Frame",
-          components: [
-            {
-              id: "",
-              name: "Main",
-              visible: true,
-              matOptions: []
-            },
-            {
-              id: "",
-              name: "Side",
-              visible: true,
-              matOptions: []
-            },
-            {
-              id: "",
-              name: "BigGear",
-              visible: true,
-              matOptions: []
-            },
-            {
-              id: "",
-              name: "SmallGears",
-              visible: true,
-              matOptions: []
-            },
-          ]
-        }
-      ]
+      displayName: "Steampunk Spectacles"
+    }
+  },
+  {
+    id: "2",
+    fileName: "steampunkTopHat",
+    modelData: {
+      displayName: "Steampunk Top Hat"
+    }
+  },
+  {
+    id: "3",
+    fileName: "steampunkWatch",
+    modelData: {
+      displayName: "Steampunk Wrist Watch"
     }
   }
 ]

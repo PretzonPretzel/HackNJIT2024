@@ -1,6 +1,8 @@
 <template>
-  <Testing />
-  <RouterView />
+  <div style="min-height: 100vh; background-color: #D6B89C;">
+    <Testing />
+    <RouterView style=" height: 100%;"/>
+  </div>
 </template>
 
 <script setup lang="ts">
