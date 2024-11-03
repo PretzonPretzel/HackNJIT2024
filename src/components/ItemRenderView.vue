@@ -11,10 +11,12 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Background from 'three/src/renderers/common/Background.js';
 import { GLTFLoader, MTLLoader, OBJLoader } from 'three/examples/jsm/Addons.js';
+import type { PartCustomizationOption, StoreItem } from '@/types/types';
 
 const props = defineProps<{
   /** Name of gltf file that lives in public */
   fileName: string
+  currentItem: StoreItem
 }>()
 
 const RENDERER_WIDTH = 600
@@ -139,6 +141,8 @@ function loadGltf() {
     gltf.scene.position.set(0, 0, 0)
     scene.add( gltf.scene );
     currentModel.value = gltf.scene
+    
+    currentModel.value.children[11].visible = false
   }, undefined, function ( error ) {
 
     console.error( error );
@@ -191,9 +195,21 @@ watch(currentModel, (newVal) => {
   console.log("current model:", newVal)
 })
 
+watch(() => props.currentItem, (newVal) => {
+  updateGroups(newVal.modelData.customizationOptions)
+}, {deep: true})
 
-function updateGroups() {
-  // TODO: show groups based on props
+/** Call this everytime the user changes a customization option */
+function updateGroups(options: PartCustomizationOption[]) {
+  for (const option of options) {
+    const currentModelMeshOptions = currentModel.value?.children.filter(item => item.name.startsWith(`${option.partName}`))
+    for (const component of option.components) {
+      const targetMeshName = `${option.partName}(${component.name})`
+      const mesh = currentModelMeshOptions?.find(item => item.name === targetMeshName)
+      if (mesh === undefined) throw new Error("Could not find mesh with that name")
+      mesh.visible = component.visible
+    }
+  }
 }
 
 </script>

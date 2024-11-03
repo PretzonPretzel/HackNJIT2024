@@ -3,6 +3,7 @@
     <ItemRenderView 
       v-if="currentItem"
       :file-name="currentItem?.fileName"
+      :current-item="currentItem"
     />
     <div v-else>Item Not Found</div>
   </div>
@@ -10,24 +11,15 @@
 
 <script setup lang="ts">
 import ItemRenderView from '@/components/ItemRenderView.vue';
+import { storeItems } from '@/data/storeItems';
 import { computed } from 'vue';
 
 const props = defineProps<{
   id: string
 }>()
 
-const availableItems = [
-  {
-    id: "4",
-    fileName: "cub"
-  },
-  {
-    id: "1",
-    fileName: "steampunkGlasses"
-  }
-]
+const currentItem = computed(() => storeItems.find(item => item.id === props.id))
 
-const currentItem = computed(() => availableItems.find(item => item.id === props.id))
 </script>
 
 <style scoped>

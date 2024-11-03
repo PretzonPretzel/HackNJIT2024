@@ -1,33 +1,27 @@
-export interface ColorOption {
-    name: string
-    hex: string
-  }
+export type StoreItem = {
+  id: string
+  fileName: string
+  modelData: ModelData
+}
+
+export type ModelData = {
+  displayName: string
+  customizationOptions: PartCustomizationOption[]
+}
+
+export type PartCustomizationOption = {
+  partName: string
+  components: ComponentOption[]
+}
   
-export interface ComponentOption {
-    name: string
-    id: string
-    colorOptions: ColorOption[]
-  }
-  
-export interface PartCustomizationOption {
-    partName: string
-    components: ComponentOption[]
-  }
-  
-  const itemOptions: PartCustomizationOption[] = [
-    {
-      partName: "Glass",
-      components: [
-        {
-          name: "Component 1",
-          id: "",
-          colorOptions: [
-            {
-              name: "red",
-              hex: "#FFFF"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+export type ComponentOption = {
+  id: string
+  name: string
+  visible: boolean
+  matOptions: MaterialOptions[]
+}
+
+export type MaterialOptions = {
+  name: string
+  selected: boolean
+}
