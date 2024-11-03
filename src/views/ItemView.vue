@@ -1,11 +1,12 @@
 <template>
   <div class="item-view-container">
+    <pre>{{currentItem}}</pre>
     <div v-if="currentItem" class="item-view">
       <ItemRenderView 
         :file-name="currentItem?.fileName"
         :current-item="currentItem"
       />
-      <ItemOptions :options="customizationOptions"/>
+      <ItemOptions :options="currentItem.modelData.customizationOptions" @update-options="handleUpdateOptions"/>
     </div>
     <div v-else>Item Not Found</div>
     
@@ -17,15 +18,20 @@
 import ItemRenderView from '@/components/ItemRenderView.vue';
 import ItemOptions from '@/components/ItemOptions.vue';
 import { storeItems } from '@/data/storeItems';
-import { computed } from 'vue';
+import { computed, ref, type Ref } from 'vue';
+import type { StoreItem } from '@/types/types';
 
 const props = defineProps<{
   id: string
 }>()
 
-const currentItem = computed(() => storeItems.find(item => item.id === props.id))
-const customizationOptions = computed(() => currentItem.value?.modelData.customizationOptions ?? [])
+const currentItem: Ref<StoreItem | undefined> = ref(storeItems.find(item => item.id === props.id))
 
+function handleUpdateOptions(partName: string, componentName: string, visible: boolean) {
+  const component = currentItem.value?.modelData.customizationOptions.find(item => item.partName === partName)?.components.find(item => item.name === componentName)
+  if (component === undefined) throw new Error("could not find component")
+  component.visible = visible
+}
 </script>
 
 <style scoped>

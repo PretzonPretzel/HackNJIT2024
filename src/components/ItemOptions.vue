@@ -5,6 +5,7 @@
       <div class="part-title">Part: {{ option.partName }}</div>
       <div v-for="component in option.components">
         <div class="component-name">{{component.name}}</div>
+        <input type="checkbox" @input="(e: Event) => emit('update-options', option.partName, component.name, e.target.checked)">
       </div>
     </div>
   </div>
@@ -12,10 +13,19 @@
 
 <script setup lang="ts">
 import type { PartCustomizationOption } from '@/types/types';
+import { useVModel } from '@vueuse/core';
 
 const props = defineProps<{
   options: PartCustomizationOption[]
 }>()
+
+const emit = defineEmits<{
+  (e: 'update-options', partName: string, componentName: string, visible: boolean): void
+}>()
+
+// const _options = useVModel(props, 'options', emit)
+
+
 </script>
 
 <style scoped>

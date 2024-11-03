@@ -141,8 +141,6 @@ function loadGltf() {
     gltf.scene.position.set(0, 0, 0)
     scene.add( gltf.scene );
     currentModel.value = gltf.scene
-    
-    currentModel.value.children[11].visible = false
   }, undefined, function ( error ) {
 
     console.error( error );
@@ -197,6 +195,7 @@ watch(currentModel, (newVal) => {
 
 watch(() => props.currentItem, (newVal) => {
   updateGroups(newVal.modelData.customizationOptions)
+  currentModel.value?.updateMatrix()
 }, {deep: true})
 
 /** Call this everytime the user changes a customization option */
