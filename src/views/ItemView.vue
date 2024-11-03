@@ -5,6 +5,7 @@
       <ItemRenderView 
         :file-name="currentItem?.fileName"
         :current-item="currentItem"
+        @set-options="handleSetOptions"
       />
       <ItemOptions :options="currentItem.modelData.customizationOptions" @update-options="handleUpdateOptions"/>
     </div>
@@ -19,7 +20,7 @@ import ItemRenderView from '@/components/ItemRenderView.vue';
 import ItemOptions from '@/components/ItemOptions.vue';
 import { storeItems } from '@/data/storeItems';
 import { computed, ref, type Ref } from 'vue';
-import type { StoreItem } from '@/types/types';
+import type { PartCustomizationOption, StoreItem } from '@/types/types';
 
 const props = defineProps<{
   id: string
@@ -31,6 +32,11 @@ function handleUpdateOptions(partName: string, componentName: string, visible: b
   const component = currentItem.value?.modelData.customizationOptions.find(item => item.partName === partName)?.components.find(item => item.name === componentName)
   if (component === undefined) throw new Error("could not find component")
   component.visible = visible
+}
+
+function handleSetOptions(options: PartCustomizationOption[]) {
+  if (currentItem.value === undefined) throw new Error("Options undefined")
+  currentItem.value.modelData.customizationOptions = options
 }
 </script>
 

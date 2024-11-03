@@ -11,12 +11,16 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Background from 'three/src/renderers/common/Background.js';
 import { GLTFLoader, MTLLoader, OBJLoader } from 'three/examples/jsm/Addons.js';
-import type { PartCustomizationOption, StoreItem } from '@/types/types';
+import type { ModelData, PartCustomizationOption, StoreItem } from '@/types/types';
 
 const props = defineProps<{
   /** Name of gltf file that lives in public */
   fileName: string
   currentItem: StoreItem
+}>()
+
+const emit = defineEmits<{
+  (e: 'set-options', value: PartCustomizationOption[]): void
 }>()
 
 const RENDERER_WIDTH = 600
@@ -88,7 +92,6 @@ function setUpScene() {
 
 function loadGltf() {
   const loader = new GLTFLoader();
-
   loader.load( `/public/assets/${props.fileName}/${props.fileName}.gltf`, function ( gltf ) {
     console.log(gltf)
     // gltf.scene.children[0].scale.set(1000, 1000, 1000)
@@ -96,11 +99,41 @@ function loadGltf() {
     gltf.scene.position.set(0, 0, 0)
     scene.add( gltf.scene );
     currentModel.value = gltf.scene
+    const customOptions = traverseModel(currentModel.value)
+    emit('set-options', customOptions)
   }, undefined, function ( error ) {
 
     console.error( error );
 
   });
+}
+
+function traverseModel(model: THREE.Group<THREE.Object3DEventMap>): PartCustomizationOption[] {
+  const options: PartCustomizationOption[] = []
+  const uniqueNames = new Set(model.children.map(item => item.name.split("(")[0]))
+  console.log("uniqueNames", uniqueNames)
+  for (const name of uniqueNames) {
+    const variantNames = model.children.filter(child => child.name.startsWith(name)).map(item => {
+      const firstPart = item.name.split("(")
+      if (firstPart.length > 1) {
+        const secondPart = firstPart[1].split(")")[0]
+        return secondPart
+      }
+      return firstPart[0]
+    })
+    console.log("variants names", variantNames)
+    options.push({
+      partName: name,
+      components: variantNames.map((varName, idx) => ({
+        name: varName,
+        id: `${name}-${varName}`,
+        visible: idx === 0,
+        matOptions: []
+      }))
+    })
+  }
+
+  return options
 }
 
 // const gridHelper = new THREE.GridHelper(12, 12);
@@ -144,8 +177,11 @@ function updateGroups(options: PartCustomizationOption[]) {
     for (const component of option.components) {
       const targetMeshName = `${option.partName}(${component.name})`
       const mesh = currentModelMeshOptions?.find(item => item.name === targetMeshName)
-      if (mesh === undefined) throw new Error("Could not find mesh with that name")
-      mesh.visible = component.visible
+      // if (mesh === undefined) throw new Error("Could not find mesh with that name")
+      if (mesh !== undefined) {
+        mesh.visible = component.visible
+      }
+      
     }
   }
 }
