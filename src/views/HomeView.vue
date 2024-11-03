@@ -1,10 +1,14 @@
-<script setup>
-import ItemOptions from '@/components/ItemOptions.vue';
-</script>
-
 <template>
-    <ItemOptions/>
+  <div>
+    Home View
+  </div>
 </template>
 
+<script setup>
+
+
+</script>
+
 <style scoped>
+
 </style>

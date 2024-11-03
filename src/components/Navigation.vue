@@ -25,11 +25,16 @@ onMounted( () => {
     <div id="main-nav">
         <div id="link-div">
             <img src="../assets/gears.gif" id="home-gear" class="shown">
-            <RouterLink class="rout-link" id="home-link" to="">Home</RouterLink>
+            <RouterLink class="rout-link" id="home-link" to="/">Home</RouterLink>
         </div>
 
         <div id="link-div">
-            <RouterLink class="rout-link" to="about" id="about-link">Store</RouterLink>
+            <RouterLink class="rout-link" to="/store" id="about-link">Store</RouterLink>
+            <img src="../assets/gears.gif" id="store-gear" class="hidden">
+        </div>  
+
+        <div id="link-div">
+            <RouterLink class="rout-link" to="/about" id="about-link">About</RouterLink>
             <img src="../assets/gears.gif" id="store-gear" class="hidden">
         </div>  
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="store-view-container">
     <ItemPreview 
-      v-for="item in storeItems"
+      v-for="item in allStoreItems"
       :item="item"
       @click="handlePreviewClick(item.id)"
     />
@@ -12,7 +12,9 @@
 import ItemPreview from '@/components/ItemPreview.vue';
 import { storeItems } from '@/data/storeItems';
 import type { StoreItem } from '@/types/types';
+import { ref } from 'vue';
 
+const allStoreItems = ref(storeItems)
 
 function handlePreviewClick(id: string) {
   // TODO route to item/id

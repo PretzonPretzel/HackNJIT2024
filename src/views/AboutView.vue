@@ -4,7 +4,6 @@ import ItemRenderView from '@/components/ItemRenderView.vue';
 
 <template>
     <div id="page-root">
-        <ItemRenderView />
         <p>This is the ABOUT page!!!</p>
     </div>
 </template>
