@@ -1,11 +1,13 @@
 <template>
   <div class="options-container">
     <div class="option" v-for="option in options">
-      <div class="part-title">{{ option.partName }}</div>
-      <div class="components-container">
-        <div class="checkbox-option" v-for="component in option.components">
-          <input type="checkbox" @input="(e: Event) => emit('update-options', option.partName, component.name, e.target.checked)" :checked="component.visible">
-          <div class="component-name">{{component.name}}</div>
+      <div v-if="option.components.length > 1">
+        <div class="part-title">{{ option.partName }}</div>
+        <div class="components-container">
+          <div class="checkbox-option" v-for="component in option.components">
+            <input type="checkbox" @input="(e: Event) => emit('update-options', option.partName, component.name, e.target.checked)" :checked="component.visible">
+            <div class="component-name">{{component.name}}</div>
+          </div>
         </div>
       </div>
     </div>
