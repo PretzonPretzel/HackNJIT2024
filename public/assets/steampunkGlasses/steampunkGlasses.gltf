@@ -94,7 +94,7 @@
 		},
 		{
 			"mesh":2,
-			"name":"Lens(Black).001",
+			"name":"Lens(Black)",
 			"rotation":[
 				0.7071068286895752,
 				-0.7071068286895752,
@@ -199,7 +199,7 @@
 		},
 		{
 			"mesh":9,
-			"name":"Lens(Black)",
+			"name":"Lens(Gold)",
 			"rotation":[
 				0.7071068286895752,
 				-0.7071068286895752,
@@ -1062,7 +1062,7 @@
 		{
 			"bufferView":36,
 			"componentType":5126,
-			"count":2824,
+			"count":2816,
 			"max":[
 				-1.4117507934570312,
 				-0.440888375043869,
@@ -1078,13 +1078,13 @@
 		{
 			"bufferView":37,
 			"componentType":5126,
-			"count":2824,
+			"count":2816,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":38,
 			"componentType":5126,
-			"count":2824,
+			"count":2816,
 			"type":"VEC2"
 		},
 		{
@@ -1341,44 +1341,44 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":33888,
+			"byteLength":33792,
 			"byteOffset":555984,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":33888,
-			"byteOffset":589872,
+			"byteLength":33792,
+			"byteOffset":589776,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":22592,
-			"byteOffset":623760,
+			"byteLength":22528,
+			"byteOffset":623568,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":10752,
-			"byteOffset":646352,
+			"byteOffset":646096,
 			"target":34963
 		},
 		{
 			"buffer":0,
 			"byteLength":5616,
-			"byteOffset":657104,
+			"byteOffset":656848,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":5616,
-			"byteOffset":662720,
+			"byteOffset":662464,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":3744,
-			"byteOffset":668336,
+			"byteOffset":668080,
 			"target":34962
 		}
 	],
@@ -1390,7 +1390,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":672080,
+			"byteLength":671824,
 			"uri":"steampunkGlasses.bin"
 		}
 	]
