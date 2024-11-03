@@ -29,7 +29,7 @@ const props = defineProps<{
 const currentItem: Ref<StoreItem | undefined> = ref(storeItems.find(item => item.id === props.id))
 
 function handleUpdateOptions(partName: string, componentName: string, visible: boolean) {
-  const component = currentItem.value?.modelData.customizationOptions.find(item => item.partName === partName)?.components.find(item => item.name === componentName)
+  const component = currentItem.value?.modelData?.customizationOptions?.find(item => item.partName === partName)?.components.find(item => item.name === componentName)
   if (component === undefined) throw new Error("could not find component")
   component.visible = visible
 }

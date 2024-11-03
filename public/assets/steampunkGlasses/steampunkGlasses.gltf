@@ -30,7 +30,7 @@
 	],
 	"nodes":[
 		{
-			"name":"Empty",
+			"name":"Ignore(Photo)",
 			"rotation":[
 				0.5,
 				-0.5,
@@ -65,7 +65,7 @@
 		},
 		{
 			"mesh":1,
-			"name":"Bridge",
+			"name":"Bridge(main)",
 			"rotation":[
 				0,
 				-1,
@@ -74,7 +74,7 @@
 			]
 		},
 		{
-			"name":"Empty.001",
+			"name":"Ignore(Empty)",
 			"rotation":[
 				0,
 				-1,
@@ -94,7 +94,7 @@
 		},
 		{
 			"mesh":2,
-			"name":"BlackLens",
+			"name":"Lens(Black).001",
 			"rotation":[
 				0.7071068286895752,
 				-0.7071068286895752,
@@ -109,7 +109,7 @@
 		},
 		{
 			"mesh":3,
-			"name":"Arm",
+			"name":"Arm(Main)",
 			"rotation":[
 				0,
 				-1,
@@ -199,7 +199,7 @@
 		},
 		{
 			"mesh":9,
-			"name":"GoldLens",
+			"name":"Lens(Black)",
 			"rotation":[
 				0.7071068286895752,
 				-0.7071068286895752,
