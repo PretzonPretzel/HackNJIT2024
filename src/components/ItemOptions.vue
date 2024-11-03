@@ -1,7 +1,7 @@
 <template>
   <div class="options-container">
     <div class="option" v-for="option in options">
-      <div v-if="option.components.length > 1">
+      <div v-if="option.components.length > 1 && option.partName !== 'ignore'">
         <div class="part-title">{{ option.partName }}</div>
         <div class="components-container">
           <div class="checkbox-option" v-for="component in option.components">
