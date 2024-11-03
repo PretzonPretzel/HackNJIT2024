@@ -26,7 +26,6 @@ onMounted( () => {
         <div id="link-div">
             <img src="../assets/gears.gif" id="home-gear" class="shown">
             <RouterLink class="rout-link" id="home-link" to="/">Home</RouterLink>
-            <RouterLink class="rout-link" id="home-link" to="/">Home</RouterLink>
         </div>
 
         <div id="link-div">
@@ -37,7 +36,6 @@ onMounted( () => {
         <div id="link-div">
             <RouterLink class="rout-link" to="/about" id="about-link">About</RouterLink>
             <img src="../assets/gears.gif" id="store-gear" class="hidden">
-            <RouterLink class="rout-link" to="about" id="about-link">About</RouterLink>
         </div>  
     </div>
 </template>
