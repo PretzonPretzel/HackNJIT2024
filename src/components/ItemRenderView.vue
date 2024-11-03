@@ -192,8 +192,8 @@ function updateGroups(options: PartCustomizationOption[]) {
 
 <style scoped>
 .canvas-renderer {
-  border: 2px solid black;
-  border-radius: 20px;
+  /* border: 2px solid black; */
+  /* border-radius: 20px; */
 }
 
 .display-name {
