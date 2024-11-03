@@ -5,7 +5,7 @@
       <div class="part-title">Part: {{ option.partName }}</div>
       <div v-for="component in option.components">
         <div class="component-name">{{component.name}}</div>
-        <input type="checkbox" @input="(e: Event) => emit('update-options', option.partName, component.name, e.target.checked)">
+        <input type="checkbox" @input="(e: Event) => emit('update-options', option.partName, component.name, e.target.checked)" :checked="component.visible">
       </div>
     </div>
   </div>
