@@ -1,8 +1,9 @@
 <script setup>
+import ItemOptions from '@/components/ItemOptions.vue';
 </script>
 
 <template>
-    <p>This is the home page!!!</p>
+    <ItemOptions/>
 </template>
 
 <style scoped>
