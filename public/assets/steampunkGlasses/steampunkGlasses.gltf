@@ -3,6 +3,10 @@
 		"generator":"Khronos glTF Blender I/O v4.0.44",
 		"version":"2.0"
 	},
+	"extensionsUsed":[
+		"KHR_materials_specular",
+		"KHR_materials_ior"
+	],
 	"scene":0,
 	"scenes":[
 		{
@@ -25,6 +29,25 @@
 		}
 	],
 	"nodes":[
+		{
+			"name":"Area",
+			"rotation":[
+				-0.6636767983436584,
+				-0.2439940869808197,
+				0.2439941018819809,
+				0.6636767983436584
+			],
+			"scale":[
+				9.237735748291016,
+				9.2377347946167,
+				9.237735748291016
+			],
+			"translation":[
+				-1.8080978393554688,
+				3.5447356700897217,
+				0
+			]
+		},
 		{
 			"name":"Empty",
 			"rotation":[
@@ -124,20 +147,6 @@
 				-0.039565663784742355,
 				-0.013721195980906487,
 				-0.30642059445381165
-			]
-		},
-		{
-			"name":"Empty.003",
-			"rotation":[
-				-0.4276960492134094,
-				0.4268814027309418,
-				-0.5628702044487,
-				0.5639376640319824
-			],
-			"translation":[
-				0,
-				1.0015227794647217,
-				8.638646125793457
 			]
 		},
 		{
@@ -272,6 +281,18 @@
 			"doubleSided":true,
 			"emissiveTexture":{
 				"index":4
+			},
+			"extensions":{
+				"KHR_materials_specular":{
+					"specularColorFactor":[
+						1.078740119934082,
+						1.078740119934082,
+						1.078740119934082
+					]
+				},
+				"KHR_materials_ior":{
+					"ior":1.4500000476837158
+				}
 			},
 			"name":"AltBrass",
 			"normalTexture":{
@@ -675,13 +696,13 @@
 		},
 		{
 			"mimeType":"image/png",
-			"name":"AltBrass_BaseColor.1001-AltBrass_Alpha.1001",
-			"uri":"AltBrass_BaseColor_1001-AltBrass_Alpha_1001.png"
+			"name":"AltBrass_BaseColor.1001.png-AltBrass_Alpha.1001.png",
+			"uri":"AltBrass_BaseColor_1001_png-AltBrass_Alpha_1001_png.png"
 		},
 		{
 			"mimeType":"image/png",
-			"name":"AltBrass_Metallic.1001-AltBrass_Roughness.1001",
-			"uri":"AltBrass_Metallic_1001-AltBrass_Roughness_1001.png"
+			"name":"AltBrass_Metallic.1001.png-AltBrass_Roughness.1001.png",
+			"uri":"AltBrass_Metallic_1001_png-AltBrass_Roughness_1001_png.png"
 		},
 		{
 			"mimeType":"image/png",
@@ -695,13 +716,13 @@
 		},
 		{
 			"mimeType":"image/png",
-			"name":"Black_BaseColor.1001-Black_Alpha.1001",
-			"uri":"Black_BaseColor_1001-Black_Alpha_1001.png"
+			"name":"Black_BaseColor.1001.png-Black_Alpha.1001.png",
+			"uri":"Black_BaseColor_1001_png-Black_Alpha_1001_png.png"
 		},
 		{
 			"mimeType":"image/png",
-			"name":"Black_Metallic.1001-Black_Roughness.1001",
-			"uri":"Black_Metallic_1001-Black_Roughness_1001.png"
+			"name":"Black_Metallic.1001.png-Black_Roughness.1001.png",
+			"uri":"Black_Metallic_1001_png-Black_Roughness_1001_png.png"
 		},
 		{
 			"mimeType":"image/png",
@@ -755,13 +776,13 @@
 		},
 		{
 			"mimeType":"image/png",
-			"name":"OuterGear_BaseColor.1001-OuterGear_Alpha.1001",
-			"uri":"OuterGear_BaseColor_1001-OuterGear_Alpha_1001.png"
+			"name":"OuterGear_BaseColor.1001.png-OuterGear_Alpha.1001.png",
+			"uri":"OuterGear_BaseColor_1001_png-OuterGear_Alpha_1001_png.png"
 		},
 		{
 			"mimeType":"image/png",
-			"name":"OuterGear_Metallic.1001-OuterGear_Roughness.1001",
-			"uri":"OuterGear_Metallic_1001-OuterGear_Roughness_1001.png"
+			"name":"OuterGear_Metallic.1001.png-OuterGear_Roughness.1001.png",
+			"uri":"OuterGear_Metallic_1001_png-OuterGear_Roughness_1001_png.png"
 		},
 		{
 			"mimeType":"image/png",

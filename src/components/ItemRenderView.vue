@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, render, type Ref } from 'vue';
+import { onMounted, ref, render, watch, type Ref } from 'vue';
 import * as THREE from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -18,45 +18,116 @@ const props = defineProps<{
 }>()
 
 const RENDERER_WIDTH = 600
-const RENDERER_HEIGHT = 400
+const RENDERER_HEIGHT = 350
 
 const canvasRenderer: Ref<HTMLCanvasElement | undefined> = ref()
+const currentModel: Ref<THREE.Group | undefined> = ref()
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, RENDERER_WIDTH / RENDERER_HEIGHT, 0.1, 1000 );
-scene.add(camera)
+scene.background = new THREE.Color( 0xa0a0a0 );
 
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-const cube = new THREE.Mesh( geometry, material );
-cube.position.set(0, 2, 0)
-scene.add( cube );
+const camera = new THREE.PerspectiveCamera( 45, RENDERER_WIDTH / RENDERER_HEIGHT, 0.1, 1000 );
+camera.position.set( 7, 3, 7 );
 
-camera.position.z = 5;
-
-function loadObj() {
-  const mtlLoader = new MTLLoader()
-  mtlLoader.load("../assets/models/cubeStack.mtl", (materials) => {
-    materials.preload();
-    var objLoader = new OBJLoader();
-    objLoader.setMaterials(materials);
-    objLoader.load("../assets/models/cubeStack.obj", (obj) => {  
-      var box = new THREE.Box3().setFromObject( obj );
-      var center = new THREE.Vector3();
-      box.getCenter( center );
-      obj.position.sub( center );
-      scene.add(obj)
-      console.log(obj)
-    },
-    (progress) => {
-      console.log("Progress:", progress)
-    },
-    (error) => {
-      console.error("An error:", error)
-    }
-  )
+function setUpScene() {
+  const renderer = new THREE.WebGLRenderer( {
+    // alpha: true, 
+    canvas: canvasRenderer.value,
+    antialias: true
   })
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( RENDERER_WIDTH, RENDERER_HEIGHT );
+  renderer.toneMapping = THREE.LinearToneMapping;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  const geometry = new THREE.BoxGeometry( 20, 20, 20 );
+  const material = new THREE.MeshBasicMaterial( { color: 0x808080 } );
+  const cube = new THREE.Mesh( geometry, material );
+  cube.position.set(0, 0, 0)
+  // scene.add( cube );
+
+  const pmremGenerator = new THREE.PMREMGenerator( renderer );
+  pmremGenerator.compileEquirectangularShader();
+
+  const hlight = new THREE.AmbientLight( 0xffffff, 0.3 );
+  scene.add( hlight );
+
+  const lightPositions: [number, number, number][] = [
+    [-10, 5, 0],
+    [10, 5, 0],
+    [0, 5, 10],
+    [0, 5, -10],
+
+    [-10, 5, 5],
+    [10, 5, -5],
+    [-5, 5, 10],
+    [5, 5, -10],
+  ]
+
+  for (const pos of lightPositions) {
+    const directionalLight = new THREE.DirectionalLight( 0xffffff, 2.5 );
+    directionalLight.castShadow = true;
+    directionalLight.shadow.camera.top = 4;
+    directionalLight.shadow.camera.bottom = - 4;
+    directionalLight.shadow.camera.left = - 4;
+    directionalLight.shadow.camera.right = 4;
+    directionalLight.shadow.camera.near = 0.1;
+    directionalLight.shadow.camera.far = 40;
+    directionalLight.shadow.camera.far = 40;
+    directionalLight.shadow.bias = - 0.002;
+    directionalLight.position.set(...pos);
+    scene.add( directionalLight );
+  }
+
+  return renderer
 }
+
+//scene.add( new THREE.CameraHelper( directionalLight.shadow.camera ) );
+
+// ground
+
+// const mesh = new THREE.Mesh( new THREE.BufferGeometry( 100, 100 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+// mesh.rotation.x = - Math.PI / 2;
+// mesh.receiveShadow = true;
+// scene.add( mesh );
+
+// const scene = new THREE.Scene();
+// const camera = new THREE.PerspectiveCamera( 75, RENDERER_WIDTH / RENDERER_HEIGHT, 0.1, 1000 );
+// scene.add(camera)
+
+// const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+// const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+// const cube = new THREE.Mesh( geometry, material );
+// cube.position.set(0, 2, 0)
+// scene.add( cube );
+
+// camera.position.z = 5;
+
+// function loadObj() {
+//   const mtlLoader = new MTLLoader()
+//   mtlLoader.load("../assets/models/cubeStack.mtl", (materials) => {
+//     materials.preload();
+//     var objLoader = new OBJLoader();
+//     objLoader.setMaterials(materials);
+//     objLoader.load("../assets/models/cubeStack.obj", (obj) => {  
+//       var box = new THREE.Box3().setFromObject( obj );
+//       var center = new THREE.Vector3();
+//       box.getCenter( center );
+//       obj.position.sub( center );
+//       scene.add(obj)
+//       console.log(obj)
+//     },
+//     (progress) => {
+//       console.log("Progress:", progress)
+//     },
+//     (error) => {
+//       console.error("An error:", error)
+//     }
+//   )
+//   })
+// }
 
 function loadGltf() {
   const loader = new GLTFLoader();
@@ -64,12 +135,10 @@ function loadGltf() {
   loader.load( `/public/assets/${props.fileName}/${props.fileName}.gltf`, function ( gltf ) {
     console.log(gltf)
     // gltf.scene.children[0].scale.set(1000, 1000, 1000)
+    // COORDS: y = green, blue = z, orange = x
+    gltf.scene.position.set(0, 0, 0)
     scene.add( gltf.scene );
-
-    const pointLight = new THREE.PointLight(0x404040)
-    pointLight.position.set(10, 0, 0)
-    pointLight.lookAt(gltf.scene.position)
-    scene.add(pointLight)
+    currentModel.value = gltf.scene
   }, undefined, function ( error ) {
 
     console.error( error );
@@ -84,30 +153,24 @@ scene.add(gridHelper);
 const axesHelper = new THREE.AxesHelper(4);
 scene.add(axesHelper);
 
-// ambient light
-const ambientLight = new THREE.AmbientLight( 0x404040, 100 );
-const hemisphericLight = new THREE.HemisphereLight({
-  skyColor: 0xffffbb,
-  groundColor: 0x080820,
-  intensity: 100000,
-  position: {
-    x: 0,
-    y: 430,
-    z: -2500
-  }
-});
+// // ambient light
+// const ambientLight = new THREE.AmbientLight( 0x404040, 100 );
+// const hemisphericLight = new THREE.HemisphereLight({
+//   skyColor: 0xffffbb,
+//   groundColor: 0x080820,
+//   intensity: 100000,
+//   position: {
+//     x: 0,
+//     y: 430,
+//     z: -2500
+//   }
+// });
 
-scene.add(ambientLight)
-// scene.add(hemisphericLight)
+// scene.add(ambientLight)
+// // scene.add(hemisphericLight)
 
 onMounted(() => {
-  const renderer = new THREE.WebGLRenderer({
-    alpha: true, 
-    canvas: canvasRenderer.value,
-    antialias: true
-  });
-  renderer.setSize( RENDERER_WIDTH, RENDERER_HEIGHT);
-  renderer.gammaOutput = true
+  const renderer = setUpScene()
   const controls = new OrbitControls( camera, renderer.domElement );
   
   loadGltf()
@@ -124,6 +187,14 @@ onMounted(() => {
   // renderer.setAnimationLoop( animate );
 })
 
+watch(currentModel, (newVal) => {
+  console.log("current model:", newVal)
+})
+
+
+function updateGroups() {
+  // TODO: show groups based on props
+}
 
 </script>
 
